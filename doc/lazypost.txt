@@ -1,0 +1,97 @@
+*lazypost.txt*  Open LazyPost in a floating terminal window
+
+==============================================================================
+CONTENTS                                                    *lazypost-contents*
+
+    1. Introduction .......................... |lazypost-introduction|
+    2. Setup ................................. |lazypost-setup|
+    3. Configuration ......................... |lazypost-configuration|
+    4. Commands .............................. |lazypost-commands|
+    5. API ................................... |lazypost-api|
+    6. Health Check .......................... |lazypost-health|
+
+==============================================================================
+1. INTRODUCTION                                         *lazypost-introduction*
+
+lazypost.nvim opens LazyPost (TUI Postman client) in a floating terminal
+window within Neovim.
+
+==============================================================================
+2. SETUP                                                       *lazypost-setup*
+
+Using lazy.nvim: >lua
+    {
+      "tafsen/lazypost.nvim",
+      cmd = { "LazyPost" },
+      keys = {
+        { "<leader>lp", "<cmd>LazyPost<cr>", desc = "LazyPost" },
+      },
+      opts = {},
+    }
+<
+
+Using packer.nvim: >lua
+    use {
+      "tafsen/lazypost.nvim",
+      config = function()
+        require("lazypost").setup()
+      end,
+    }
+<
+
+==============================================================================
+3. CONFIGURATION                                       *lazypost-configuration*
+
+Default configuration: >lua
+    require("lazypost").setup({
+      cmd = "lazypost",      -- Command to run
+      width = 0.9,           -- 90% of editor width (0-1 for %, >1 absolute)
+      height = 0.9,          -- 90% of editor height (0-1 for %, >1 absolute)
+      border = "rounded",    -- Border style: "none", "single", "double",
+                             --               "rounded", "solid", "shadow"
+      title = " LazyPost ",  -- Window title
+      cwd = nil,             -- Working directory (nil uses current)
+    })
+<
+
+==============================================================================
+4. COMMANDS                                                 *lazypost-commands*
+
+                                                                    *:LazyPost*
+:LazyPost
+    Toggle the LazyPost floating window. Opens LazyPost if closed, closes it
+    if open.
+
+==============================================================================
+5. API                                                           *lazypost-api*
+
+                                                          *lazypost.setup()*
+lazypost.setup({opts})
+    Initialize the plugin with configuration options. See
+    |lazypost-configuration| for available options.
+
+                                                           *lazypost.open()*
+lazypost.open({opts})
+    Open LazyPost in a floating terminal window. If already open, focuses the
+    existing window. Optional {opts} table overrides configuration for this
+    call only.
+
+                                                          *lazypost.close()*
+lazypost.close()
+    Close the LazyPost floating window if it is open.
+
+                                                         *lazypost.toggle()*
+lazypost.toggle({opts})
+    Toggle the LazyPost floating window. Opens if closed, closes if open.
+    Optional {opts} table overrides configuration for this call only.
+
+==============================================================================
+6. HEALTH CHECK                                               *lazypost-health*
+
+Run `:checkhealth lazypost` to verify your setup. The health check verifies:
+
+- `lazypost` executable is found in PATH
+- Configuration file exists at `~/.config/lazypost/config.toml`
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:
